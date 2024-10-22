@@ -6,6 +6,8 @@ export const useAuth = () => useContext(AuthContext)
 
 export default function AuthProvider({children}){
     const [res, setData] = useState([])
+    const [id, setId] = useState()
+    const [isAuthenticated, setisAuthenticated] = useState(false)
 
     async function login(username, password){
         
@@ -15,6 +17,8 @@ export default function AuthProvider({children}){
             console.log(res[0].name)
             console.log(res[0].password)
             if(username === res[0].name && password === res[0].password){
+                setId(res[0].id)
+                setisAuthenticated(true)
                 return true
             }
             else{
@@ -26,9 +30,13 @@ export default function AuthProvider({children}){
         }
 
     }
+    
+    function logout() {
+        setisAuthenticated(false)
+    }
 
     return(
-        <AuthContext.Provider value={{login}}>
+        <AuthContext.Provider value={{login, id, logout, isAuthenticated}}>
             {children}
         </AuthContext.Provider>
     )

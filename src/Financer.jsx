@@ -1,17 +1,38 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Login from "./Login/Signup/Login";
-import AuthProvider from "./Security/AuthContext";
+import AuthProvider, { useAuth } from "./Security/AuthContext";
 import Home from "./Home/Home";
+import Logout from "./Logout/Logout";
 
 
 export default function Financer() {
+    function AuthenticatedRoute({children}){
+        const authContext = useAuth()
+
+        if(authContext.isAuthenticated){
+            return children
+        }
+
+        return <Navigate to="/"/>
+    }
+
     return (
         <div>
             <AuthProvider>
                 <BrowserRouter>
                     <Routes>
                         <Route path="/" element={<Login/>}/>
-                        <Route path="/home" element={<Home/>}/>
+                        <Route path="/home" element={
+                            <AuthenticatedRoute>
+                                <Home/>
+                            </AuthenticatedRoute>
+                        }/>
+
+                        <Route path="/logout" element={
+                            <AuthenticatedRoute>
+                                <Logout/>
+                            </AuthenticatedRoute>
+                        }/>
                     </Routes>
                 </BrowserRouter>
             </AuthProvider>

@@ -1,22 +1,26 @@
 import { PieChart, pieArcLabelClasses } from '@mui/x-charts/PieChart';
-import { ResponsiveChartContainer } from '@mui/x-charts/ResponsiveChartContainer';
 import * as React from 'react';
+import { useAuth } from '../Security/AuthContext';
+import { getFarmExpense } from '../api/ApiService';
 
 export default function Charts() {
   // Define state for users and loading
   const [users, setUsers] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
+  const authContext = useAuth()
 
   React.useEffect(() => {
     // Simulating an async data fetch
     const fetchData = async () => {
-      const fetchedUsers = [
-        { label: "6d ago", value: 120 },
-        { label: "5d ago", value: 200 },
-      ];
-      setUsers(fetchedUsers);
-      // Set the fetched data to state
-      setLoading(false); // Set loading to false
+      try {
+        const response = await getFarmExpense(1001);
+        setUsers(response.data);
+        console.log(users[0])
+        // Set the fetched data to state
+        setLoading(false); // Set loading to false
+      } catch (error) {
+        console.log(error)
+      }
     };
 
     fetchData();
@@ -27,14 +31,20 @@ export default function Charts() {
   }
 
   return (
-    <div className='pl-11'>
+    <div className='pl-[50px]'>
       <PieChart
         series={[
           {
-            data: users,
+            data: [
+              {value: users[0].labour, label: "Labour"},
+              {value: users[0].fertilizer, label: "Fertilizer"},
+              {value: users[0].seeds, label: "Seeds"},
+              {value: users[0].pesticides, label: "Pesticides"}
+            ],
             arcLabelMinAngle: 35,
             arcLabelRadius: '60%',
             arcLabel: (item) => `${item.value}%`,
+            cx: 150
           },
         ]}
 
@@ -45,7 +55,7 @@ export default function Charts() {
         }}
         
         height={300}
-        width={300}
+        width={440}
       />
     </div>
   );

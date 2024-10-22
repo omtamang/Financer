@@ -2,6 +2,7 @@ import { Field,Form, Formik } from "formik";
 import { useState } from "react";
 import { useAuth } from "../../Security/AuthContext";
 import { useNavigate } from "react-router-dom";
+import Header from "../../Header/Header";
 
 
 export default function Login() {
@@ -13,8 +14,8 @@ export default function Login() {
 
     const authContext = useAuth()
 
-    function onSubmit(value) {
-        if(authContext.login(value.username, value.password)){
+    async function onSubmit(value) {
+        if(await authContext.login(value.username, value.password)){
             navigate("/home")
         }
         else{
@@ -24,7 +25,8 @@ export default function Login() {
 
     return (
         <div>
-            <div className="text-center md:text-3xl font-bold md:pt-[100px]">
+            <Header/>
+            <div className="text-center md:text-3xl font-bold md:pt-[20px]">
                 Login to our system
             </div>
             <div>
