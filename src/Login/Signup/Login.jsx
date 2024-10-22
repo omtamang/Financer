@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 export default function Login() {
     const[username, setUsername] = useState(null)
     const[password, setPassword] = useState(null)
+    const[invalid, setInvalid] = useState(false)
 
     const navigate = useNavigate()
 
@@ -17,7 +18,7 @@ export default function Login() {
             navigate("/home")
         }
         else{
-            return true
+            setInvalid(true)
         }
     }
 
@@ -36,6 +37,11 @@ export default function Login() {
                     {
                         (props) => (
                             <Form className="md:w-[500px] m-auto">
+
+                                {invalid && <div className="alert alert-danger">
+                                    Invalid username or password
+                                </div>}
+
                                 <fieldset>
                                     <label className="form-label font-bold">Username</label>
                                     <Field type="text" name="username" placeholder="Enter your Username" className="form-control md:w-[100px]" required/>
