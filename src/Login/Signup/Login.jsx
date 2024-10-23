@@ -27,7 +27,7 @@ export default function Login() {
         <div>
             <Header/>
             <div className="text-center md:text-3xl font-bold md:pt-[20px]">
-                Login to our system
+                Welcome back
             </div>
             <div>
                 <div className="container md:pt-[80px]">

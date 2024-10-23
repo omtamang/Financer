@@ -13,7 +13,8 @@ export default function Charts() {
     // Simulating an async data fetch
     const fetchData = async () => {
       try {
-        const response = await getFarmExpense(1001);
+        const id = authContext.id
+        const response = await getFarmExpense(id);
         setUsers(response.data);
         console.log(users[0])
         // Set the fetched data to state
