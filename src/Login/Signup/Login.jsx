@@ -1,7 +1,7 @@
 import { Field,Form, Formik } from "formik";
 import { useState } from "react";
 import { useAuth } from "../../Security/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Header from "../../Header/Header";
 
 
@@ -61,6 +61,10 @@ export default function Login() {
                         )
                     }
                     </Formik>
+
+                    <div className="text-center pt-4">
+                        Don't have an account? <Link to={"/register"}>Register</Link>
+                    </div>
                 </div>
             </div>
         </div>

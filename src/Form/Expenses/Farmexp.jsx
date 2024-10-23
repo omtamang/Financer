@@ -1,5 +1,7 @@
 import { Field, Form, Formik } from "formik";
 import { useState } from "react";
+import { useAuth } from "../../Security/AuthContext";
+import { addFarmExp } from "../../api/ApiService";
 
 
 export default function Farmexp() {
@@ -7,8 +9,26 @@ export default function Farmexp() {
     const [fertilizer, setFertilizer] = useState('')
     const [pesticides, setPesticides] = useState('')
     const [seeds, setSeeds] = useState('')
+    const [success, setSuccess] = useState(false)
 
-    function onSubmit(value){
+    const authContext = useAuth()
+    const id = authContext.id
+    console.log(id)
+
+    async function onSubmit(value){
+        const farm = {
+            labour: value.labour,
+            fertilizer: value.fertilizer,
+            pesticides: value.pesticides,
+            seeds: value.seeds,
+        }
+
+        try {
+            await addFarmExp(farm, id)
+            setSuccess(true)
+        } catch (error) {
+            console.log(error)
+        }
 
     }
 
@@ -17,6 +37,9 @@ export default function Farmexp() {
             <p className="text-center text-xl font-bold">Add Todays Expenses</p>
 
             <div className="container">
+                {success && <div className="alert alert-success">
+                    Expenses Saved Successfully
+                </div>}
                 <Formik 
                 initialValues={{labour, fertilizer, pesticides, seeds}}
                 enableReinitialize={true}

@@ -3,7 +3,6 @@ import Header from "../Header/Header";
 export default function Logout() {
     return (
         <div>
-
             <div>
                 <Header/>
             </div>
