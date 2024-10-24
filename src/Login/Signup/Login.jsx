@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useAuth } from "../../Security/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import Header from "../../Header/Header";
+import { getFarmExpense } from "../../api/ApiService";
 
 
 export default function Login() {
@@ -16,7 +17,19 @@ export default function Login() {
 
     async function onSubmit(value) {
         if(await authContext.login(value.username, value.password)){
-            navigate("/home")
+            const id = authContext.id
+            try {
+                const response = await getFarmExpense(id)
+                console.log(response.status)
+
+                if(response.status === 200){
+                    navigate('/home')
+                }
+            } catch (error) {
+                if(error.status === 400){
+                    navigate('/initial')
+                }
+            }
         }
         else{
             setInvalid(true)
@@ -26,7 +39,7 @@ export default function Login() {
     return (
         <div>
             <Header/>
-            <div className="text-center md:text-3xl font-bold md:pt-[20px]">
+            <div className="text-center md:text-3xl font-bold md:pt-[20px] text-gray-500">
                 Welcome back
             </div>
             <div>
@@ -45,13 +58,11 @@ export default function Login() {
                                 </div>}
 
                                 <fieldset>
-                                    <label className="form-label font-bold">Username</label>
-                                    <Field type="text" name="username" placeholder="Enter your Username" className="form-control md:w-[100px]" required/>
+                                    <Field type="text" name="username" placeholder="Username" className="form-control md:w-[100px]" required/>
                                 </fieldset>
 
                                 <fieldset className="md:pt-5">
-                                    <label className="form-label font-bold">Password</label>
-                                    <Field type="password" name="password" placeholder="Enter Password" className="form-control" required/>
+                                    <Field type="password" name="password" placeholder="Password" className="form-control" required/>
                                 </fieldset> 
 
                                 <div className="text-center pt-7">
@@ -63,7 +74,7 @@ export default function Login() {
                     </Formik>
 
                     <div className="text-center pt-4">
-                        Don't have an account? <Link to={"/register"}>Register</Link>
+                        Don't have an account? <Link to={"/register"} className=" no-underline">Register</Link>
                     </div>
                 </div>
             </div>

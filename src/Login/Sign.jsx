@@ -2,14 +2,13 @@ import { Field, Formik, Form } from 'formik';
 import React, { useState } from 'react';
 import Header from '../Header/Header';
 import { adduser } from '../api/ApiService';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Sign() {
     const [name, setName] = useState('')
     const [phoneNumber, setPhoneNumber] = useState()
     const [password, setPassword] = useState()
-
-    const navigate = useNavigate()
+    const [success, setSuccess] = useState(false)
 
     async function onSubmit(value) {
         const user = {
@@ -20,7 +19,7 @@ export default function Sign() {
 
         try {
             await adduser(user)
-            navigate("/")
+            setSuccess(true)
         } catch (error) {
             console.log(error)
         }
@@ -34,6 +33,11 @@ export default function Sign() {
             <div className='text-center font-bold text-2xl'>
                     Register Now!
             </div>
+
+            {success && <div className='text-center alert alert-success w-[400px] m-auto'>
+            Congratulations, your account has been successfully created. <br/> 
+            Continue With <Link to={"/"} className='no-underline'>Login</Link>
+            </div>}
 
             <div className='w-[500px] m-auto pt-8 text-blue-500'>
                 <Formik 

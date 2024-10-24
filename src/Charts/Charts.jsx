@@ -16,11 +16,14 @@ export default function Charts() {
         const id = authContext.id
         const response = await getFarmExpense(id);
         setUsers(response.data);
+        setLoading(false)
         console.log(users[0])
         // Set the fetched data to state
         setLoading(false); // Set loading to false
       } catch (error) {
-        console.log(error)
+        <div>
+          Loading.......
+        </div>
       }
     };
 

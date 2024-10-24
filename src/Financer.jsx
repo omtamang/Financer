@@ -4,6 +4,7 @@ import AuthProvider, { useAuth } from "./Security/AuthContext";
 import Home from "./Home/Home";
 import Logout from "./Logout/Logout";
 import Sign from "./Login/Sign";
+import AddExpenses from "./NewUserScreen/AddExpenses";
 
 export default function Financer() {
     function AuthenticatedRoute({children}){
@@ -29,9 +30,10 @@ export default function Financer() {
                             </AuthenticatedRoute>
                         }/>
 
-                        <Route path="/logout" element={
+                        <Route path="/logout" element={<Logout/>}/>
+                        <Route path="/initial" element={
                             <AuthenticatedRoute>
-                                <Logout/>
+                                <AddExpenses/>
                             </AuthenticatedRoute>
                         }/>
                     </Routes>
