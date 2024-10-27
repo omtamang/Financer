@@ -7,6 +7,7 @@ export default function Charts() {
   // Define state for users and loading
   const [users, setUsers] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
+
   const authContext = useAuth()
 
   React.useEffect(() => {
@@ -15,9 +16,13 @@ export default function Charts() {
       try {
         const id = authContext.id
         const response = await getFarmExpense(id);
-        setUsers(response.data);
+        console.log(response.data)
+       
+        setUsers(response.data)
+        console.log(users[3])
+        
         setLoading(false)
-        console.log(users[0])
+
         // Set the fetched data to state
         setLoading(false); // Set loading to false
       } catch (error) {
@@ -40,11 +45,11 @@ export default function Charts() {
         series={[
           {
             data: [
-              {value: users[0].labour, label: "Labour"},
-              {value: users[0].fertilizer, label: "Fertilizer"},
-              {value: users[0].seeds, label: "Seeds"},
-              {value: users[0].pesticides, label: "Pesticides"}
-            ],
+                {value: users[0], label: "Labour"}, 
+                {value: users[1], label: "Fertilizer"},
+                {value: users[2], label: "Seeds"},
+                {value: users[3], label: "Pesticides"}
+              ],
             arcLabelMinAngle: 35,
             arcLabelRadius: '60%',
             arcLabel: (item) => `${item.value}%`,

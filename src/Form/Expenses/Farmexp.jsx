@@ -1,7 +1,7 @@
 import { Field, Form, Formik } from "formik";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../../Security/AuthContext";
-import { addFarmExp } from "../../api/ApiService";
+import { addFarmExp, getFarm } from "../../api/ApiService";
 
 
 export default function Farmexp() {
@@ -11,9 +11,20 @@ export default function Farmexp() {
     const [seeds, setSeeds] = useState('')
     const [success, setSuccess] = useState(false)
 
+    const [past, setPast] = useState([])
+
     const authContext = useAuth()
     const id = authContext.id
     console.log(id)
+
+    useEffect(() => {
+        getFarm(id)
+        .then((response) => {
+            console.log(response)
+            setPast(response.data)
+        })
+        .catch((error) => { console.log(error)})
+    }, [])
 
     async function onSubmit(value){
         const farm = {

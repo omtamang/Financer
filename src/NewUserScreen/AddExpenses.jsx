@@ -27,8 +27,8 @@ export default function AddExpenses() {
 
         try {
             const response = await addFarmExp(farm, id)
-            console.log(response)
-            if(response.status === 200) {
+            console.log(response.status)
+            if(response.status === 201) {
                 navigate('/home')
             }
         } catch (error) {
@@ -43,11 +43,11 @@ export default function AddExpenses() {
             </div>
             
             <div className=" text-center">
-            <h1 className="text-3xl font-bold mb-4">Add Expenses</h1>
+            <h1 className="text-3xl font-bold mb-4 text-slate-500">Start by adding some expenses</h1>
                 <Formik 
                 initialValues={{labour, fertilizer, pesticides, seeds}}
                 enableReinitialize={true}
-                onSubmit={{onSubmit}}
+                onSubmit={onSubmit}
                 >
                 {
                     (props) => (

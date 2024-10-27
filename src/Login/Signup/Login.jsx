@@ -58,7 +58,7 @@ export default function Login() {
                                 </div>}
 
                                 <fieldset>
-                                    <Field type="text" name="username" placeholder="Username" className="form-control md:w-[100px]" required/>
+                                    <Field type="name" name="username" placeholder="Username" className="form-control md:w-[100px]" required/>
                                 </fieldset>
 
                                 <fieldset className="md:pt-5">
